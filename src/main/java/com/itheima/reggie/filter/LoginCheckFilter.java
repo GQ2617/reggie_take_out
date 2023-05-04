@@ -35,10 +35,14 @@ public class LoginCheckFilter implements Filter {
         String[] urls = new String[]{
                 "/employee/login",
                 "/employee/logout",
+                "/user/login",
+                "/user/sendMsg",
                 "/backend/**",
                 "/front/**",
-                "/user/login",
-                "/user/sendMsg"
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources",
+                "/v2/api-docs"
         };
         // 判断本次请求是否需要处理
         boolean check = check(urls, requestURI);

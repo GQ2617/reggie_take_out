@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 4001
 spring:
   mail:
     host: stem.qq.com
@@ -11,9 +11,9 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://81.70.5.237:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
-      password: root
+      password: 1234
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

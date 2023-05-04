@@ -6,6 +6,10 @@ import com.itheima.reggie.common.BaseContext;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,7 @@ import java.time.LocalDateTime;
 @Slf4j
 @RestController
 @RequestMapping("/employee")
+@Api(tags = "员工相关接口")
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
@@ -37,6 +42,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
+    @ApiOperation("员工登录")
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
         // 1. 对密码进行加密
         String password = employee.getPassword();
@@ -74,6 +80,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/logout")
+    @ApiOperation("员工退出")
     public R<String> logout(HttpServletRequest request) {
         request.getSession().removeAttribute("employee");
         return R.success("退出成功");
@@ -87,6 +94,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping
+    @ApiOperation("添加员工")
     public R<String> save(HttpServletRequest request, @RequestBody Employee employee) {
         log.info("员工信息,{}", employee.toString());
 
@@ -111,6 +119,12 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/page")
+    @ApiOperation("获取所有员工")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页记录数", required = true),
+            @ApiImplicitParam(name = "name", value = "姓名", required = false)
+    })
     public R<Page> page(Integer page, Integer pageSize, String name) {
         log.info("page={},pageSize={},name={}", page, pageSize, name);
         // 分页
@@ -134,6 +148,7 @@ public class EmployeeController {
      * @return
      */
     @PutMapping
+    @ApiOperation("修改员工")
     public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         // 设置更新时间和修改人
         // employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
@@ -146,6 +161,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("根据id获取员工")
     public R<Employee> get(@PathVariable String id) {
         Employee employee = employeeService.getById(id);
         return R.success(employee);
